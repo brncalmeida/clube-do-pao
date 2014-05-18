@@ -163,12 +163,17 @@
 								<div class="row">
 									<div class="form-group col-sm-10">
 										<label class="checkbox-inline"><input type="checkbox" name="sobrescrever" class=""> <fmt:message
-												key="sobrescrever.membros.atuais" /> </label>
+												key="sobrescrever.membros.atuais" /> </label><br />
 										<!-- baixar planilha exemplo -->
 										<a href="#" onclick="javascript:location.href='<c:url value="/membros/add/all/exemplo"/>'"
 											title="<fmt:message
 												key="planilha.exemplo" />"> <span class="glyphicon glyphicon-cloud-download espaco_lateral"
-											title="<fmt:message key="planilha.exemplo" />"></span> <fmt:message key="planilha.exemplo" /></a>
+											title="<fmt:message key="planilha.exemplo" />"></span> <fmt:message key="planilha.exemplo" /></a> 
+										<!-- baixar planilha com membros atuais -->
+										<a href="#" onclick="javascript:location.href='<c:url value="/membros/extract/all"/>'"
+											title="<fmt:message
+												key="planilha.completa" />"> <span class="glyphicon glyphicon-cloud-download espaco_lateral"
+											title="<fmt:message key="planilha.completa" />"></span> <fmt:message key="planilha.completa" /></a>
 									</div>
 									<button id="botao_upload" class="btn btn-default navbar-right espaco_lateral_direita" title="<fmt:message key="cadastrar.membro.massivo" />"
 										type='submit'>

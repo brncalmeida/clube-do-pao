@@ -1,5 +1,6 @@
 package br.com.brncalmeida.clubepao.services;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,5 +68,12 @@ public interface ExcelFileService {
 	 */
 	File getPlanilhaExemplo();
 
-	// TODO exportar planilha com membros atuais
+	/**
+	 * Retorna planilha com todos os membros cadastrados na base
+	 * 
+	 * @return lista completa de membros cadastrados na base
+	 * @throws IOException
+	 */
+	ByteArrayOutputStream getPlanilhaAtual();
+
 }

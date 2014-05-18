@@ -1,5 +1,6 @@
 package br.com.brncalmeida.clubepao.services.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +14,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import br.com.brncalmeida.clubepao.dao.MembroDao;
 import br.com.brncalmeida.clubepao.model.Disponibilidade;
@@ -31,18 +33,18 @@ import br.com.caelum.vraptor.ioc.Component;
 @Component
 public class DefaultExcelFileService implements ExcelFileService {
 
-	private String sheetName;
+	private static final String PLANILHA_EXEMPLO_UPLOAD_MEMBROS_XLSX = "/planilha_exemplo_upload_membros.xlsx";
+	private static final String SHEET_PADRAO = "Membros";
 	private MembroDao dao;
 	private Localization localization;
 
 	public DefaultExcelFileService(MembroDao dao, Localization localization) {
 		this.dao = dao;
 		this.localization = localization;
-		this.sheetName = "Membros";
 	}
 
 	public File getPlanilhaExemplo() {
-		return new File("/planilha_exemplo_upload_membros.xlsx");
+		return new File(PLANILHA_EXEMPLO_UPLOAD_MEMBROS_XLSX);
 	}
 
 	/**
@@ -61,7 +63,7 @@ public class DefaultExcelFileService implements ExcelFileService {
 		} catch (InvalidFormatException e) {
 			throw new IllegalArgumentException(Util.getMessage(localization, "tipo.planilha.invalida"));
 		}
-		Sheet worksheet = workbook.getSheet(sheetName);
+		Sheet worksheet = workbook.getSheet(SHEET_PADRAO);
 		return worksheet;
 	}
 
@@ -172,4 +174,71 @@ public class DefaultExcelFileService implements ExcelFileService {
 	public void limparBase() {
 		dao.removeAll(dao.listarTodos());
 	}
+
+	@Override
+	public ByteArrayOutputStream getPlanilhaAtual() {
+		List<Membro> membros = dao.listarTodos();
+
+		Workbook wb = new XSSFWorkbook();
+
+		Sheet plan1 = null;
+		plan1 = wb.createSheet(SHEET_PADRAO);
+		Row row = null;
+		// Criar título da tabela
+		row = plan1.createRow(0);
+		row.createCell(0).setCellValue("Nome");
+		row.createCell(1).setCellValue("E-mail");
+		row.createCell(2).setCellValue("Seg");
+		row.createCell(3).setCellValue("Ter");
+		row.createCell(4).setCellValue("Qua");
+		row.createCell(5).setCellValue("Qui");
+		row.createCell(6).setCellValue("Sex");
+
+		Membro membro;
+		for (int i = 1; i <= membros.size(); i++) {
+			row = plan1.createRow(i);
+			membro = membros.get(i - 1);
+			row.createCell(0).setCellValue(membro.getNome());
+			row.createCell(1).setCellValue(membro.getEmail());
+			if (membro.getDisponibilidades().contains(Disponibilidade.SEGUNDA)) {
+				row.createCell(2).setCellValue("X");
+			} else {
+				row.createCell(2).setCellValue("");
+			}
+
+			if (membro.getDisponibilidades().contains(Disponibilidade.TERCA)) {
+				row.createCell(3).setCellValue("X");
+			} else {
+				row.createCell(3).setCellValue("");
+			}
+
+			if (membro.getDisponibilidades().contains(Disponibilidade.QUARTA)) {
+				row.createCell(4).setCellValue("X");
+			} else {
+				row.createCell(4).setCellValue("");
+			}
+
+			if (membro.getDisponibilidades().contains(Disponibilidade.QUINTA)) {
+				row.createCell(5).setCellValue("X");
+			} else {
+				row.createCell(5).setCellValue("");
+			}
+
+			if (membro.getDisponibilidades().contains(Disponibilidade.SEXTA)) {
+				row.createCell(6).setCellValue("X");
+			} else {
+				row.createCell(6).setCellValue("");
+			}
+		}
+
+		// cria o arquivo do excel
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		try {
+			wb.write(stream);
+		} catch (IOException e) {
+			throw new IllegalStateException(e.getMessage());
+		}
+		return stream;
+	}
 }
+	

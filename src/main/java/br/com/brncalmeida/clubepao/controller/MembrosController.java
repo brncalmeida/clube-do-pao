@@ -1,5 +1,7 @@
 package br.com.brncalmeida.clubepao.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +24,7 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.core.Localization;
 import br.com.caelum.vraptor.interceptor.download.Download;
 import br.com.caelum.vraptor.interceptor.download.FileDownload;
+import br.com.caelum.vraptor.interceptor.download.InputStreamDownload;
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 import br.com.caelum.vraptor.validator.Message;
 import br.com.caelum.vraptor.validator.ValidationMessage;
@@ -37,6 +40,7 @@ import br.com.caelum.vraptor.validator.Validations;
 public class MembrosController {
 
 	private static final String PATH_PLANILHA_EXEMPLO = "planilha_exemplo_upload_membros.xlsx";
+	private static final String PATH_PLANILHA_COMPLETA = "planilha_completa.xlsx";
 	private static final String MIME_XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 	private final Result result;
 	private final MembroDao dao;
@@ -163,6 +167,20 @@ public class MembrosController {
 	public Download geraRelatorio() {
 		File relatorio = planilha.getPlanilhaExemplo();
 		return new FileDownload(relatorio, MIME_XLSX, PATH_PLANILHA_EXEMPLO, true);
+	}
+
+	@Get
+	@Path("/membros/extract/all")
+	public Download extrairPlanilha() {
+		ByteArrayOutputStream relatorio = null;
+		if (dao.listarTodos().size() == 0) {
+			validator.add(new ValidationMessage(Util.getMessage(localization, "nao.existe.membros"), "erro"));
+		} else {
+			relatorio = planilha.getPlanilhaAtual();
+		}
+
+		validator.onErrorForwardTo(this).index();
+		return new InputStreamDownload(new ByteArrayInputStream(relatorio.toByteArray()), MIME_XLSX, PATH_PLANILHA_COMPLETA, true, relatorio.toByteArray().length);
 	}
 
 	/**
