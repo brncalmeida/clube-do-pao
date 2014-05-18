@@ -16,6 +16,8 @@
 			});
 		</script>
 
+
+		<!-- Informativos sobre o cadastro de membros -->
 		<h3>
 			<fmt:message key="menu.cadastro.membro" />
 		</h3>
@@ -53,11 +55,11 @@
 					<th>1</th>
 					<td><fmt:message key="nome" /></td>
 					<td><fmt:message key="email" /></td>
-					<td><fmt:message key="segunda" /></td>
-					<td><fmt:message key="terca" /></td>
-					<td><fmt:message key="quarta" /></td>
-					<td><fmt:message key="quinta" /></td>
-					<td><fmt:message key="sexta" /></td>
+					<td><fmt:message key="segunda_min" /></td>
+					<td><fmt:message key="terca_min" /></td>
+					<td><fmt:message key="quarta_min" /></td>
+					<td><fmt:message key="quinta_min" /></td>
+					<td><fmt:message key="sexta_min" /></td>
 				</tr>
 				<tr>
 					<th>2</th>
@@ -136,6 +138,8 @@
 			<a class="btn-lg "><span class="glyphicon glyphicon-trash"></span></a>.
 
 		</p>
+
+		<!-- Informativo sobre criação da programação -->
 
 		<hr />
 		<hr />
