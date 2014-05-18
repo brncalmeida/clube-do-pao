@@ -13,6 +13,7 @@
 <meta name="author" content="Bruno Almeida - brn.calmeida@gmai.com" />
 <meta name="description" content="<fmt:message key="meta.description"/>" />
 <meta name="keywords" content="vraptor, web, desenvolvimento, development, java, opensource, hsqldb" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Clube do pão</title>
 
@@ -33,7 +34,6 @@
 				extraCss : '<c:url value="/css/bootstrap.min.css"/>'
 			});
 		});
-
 	});
 </script>
 <style>
@@ -45,8 +45,20 @@ td,th {
 	margin-left: 2px;
 }
 
-.espaco_lateral_direita {
-	margin-right: 15px;
+@media ( max-width : 480px) {
+	.nav-tabs>li {
+		float: none;
+	}
+	.nav-tabs>li>a {
+		border: 1px solid #dddddd;
+	}
+	.nav-tabs>li.active>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a:focus
+		{
+		background: none;
+	}
+	.radio-inline+.radio-inline,.checkbox-inline+.checkbox-inline {
+		margin-left: 5px;
+	}
 }
 </style>
 
@@ -57,17 +69,33 @@ td,th {
 </head>
 
 <body>
-
 	<c:if test="${not empty param.language}">
 		<fmt:setLocale value="${param.language}" scope="session" />
 	</c:if>
-	<div class="container">
-		<div class="page-header" id="header_page">
-			<h1>
-				<fmt:message key="header.clube.pao" />
-			</h1>
-			<small> </small>
+
+
+	<div class="navbar navbar-static-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<div class="page-header" id="header_page">
+					<h1>
+						<fmt:message key="header.clube.pao" />
+					</h1>
+				</div>
+				<ul class="nav nav-tabs">
+					<li class="${pagina_ativa == 'membro' ? 'active' : ''}"><a href="<c:url value="/" />#"><span class="glyphicon glyphicon-cog"></span> <fmt:message
+								key="menu.cadastro.membro" /></a></li>
+					<li class="${pagina_ativa == 'controle' ? 'active' : ''}"><a href="<c:url value="/controle" />"><span
+							class="glyphicon glyphicon-list-alt"></span> <fmt:message key="menu.gerar.controle" /></a></li>
+					<li class="${pagina_ativa == 'mapa' ? 'active' : ''}"><a href="<c:url value="/mapa" />"><span class="glyphicon glyphicon-globe"></span>
+							<fmt:message key="menu.mapa.site" /></a></li>
+				</ul>
+			</div>
 		</div>
+	</div>
+	<br />
+	<div class="container">
+
 		<c:if test="${not empty errors}">
 			<c:forEach items="${errors }" var="error">
 				<div class="alert alert-danger">${error.message}</div>
@@ -76,15 +104,6 @@ td,th {
 		<c:if test="${not empty notice}">
 			<div class="alert alert-success">${notice }</div>
 		</c:if>
-		<ul class="nav nav-tabs">
-			<li class="${pagina_ativa == 'membro' ? 'active' : ''}"><a href="<c:url value="/" />#"><span class="glyphicon glyphicon-cog"></span> <fmt:message
-						key="menu.cadastro.membro" /></a></li>
-			<li class="${pagina_ativa == 'controle' ? 'active' : ''}"><a href="<c:url value="/controle" />"><span class="glyphicon glyphicon-list-alt"></span>
-					<fmt:message key="menu.gerar.controle" /></a></li>
-			<li class="${pagina_ativa == 'mapa' ? 'active' : ''}"><a href="<c:url value="/mapa" />"><span class="glyphicon glyphicon-globe"></span> <fmt:message
-						key="menu.mapa.site" /></a></li>
-		</ul>
-		<br />
 		<tiles:insertAttribute name="body" />
 	</div>
 	<div class="footer-page"></div>

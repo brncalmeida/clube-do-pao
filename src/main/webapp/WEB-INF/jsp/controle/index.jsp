@@ -29,7 +29,7 @@
 			</div>
 			<div class="panel-body">
 				<form id="cadastro_membros" action="<c:url value="/controle/gerar" />" method="post" class="buttonForm">
-					<div class="row">
+					<div class="row  col-mb-4">
 						<div class="col-sm-3">
 							<div class="input-group">
 								<span class="input-group-addon"><fmt:message key="data.inicial" /></span> <input type="date" name="data" class="form-control" required />
@@ -112,13 +112,13 @@
 						<c:forEach items="${sobrecargas}" var="sobrecarga">
 							<c:choose>
 								<c:when test="${sobrecarga.key > 1}">
-									<li class="list-group-item"><span class="badge">${sobrecarga.key} programações</span>${sobrecarga.value}</li>
+									<li class="list-group-item"><span class="badge">${sobrecarga.key} programações</span> <span>${sobrecarga.value}</span></li>
 								</c:when>
 								<c:when test="${sobrecarga.key == 1}">
-									<li class="list-group-item"><span class="badge">1 programação</span>${sobrecarga.value}</li>
+									<li class="list-group-item"><span class="badge">1 programação</span> <span>${sobrecarga.value}</span></li>
 								</c:when>
 								<c:otherwise>
-									<li class="list-group-item"><span class="badge">Sem programação</span>${sobrecarga.value}</li>
+									<li class="list-group-item"><span class="badge">Sem programação</span> <span>${sobrecarga.value}</span></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>

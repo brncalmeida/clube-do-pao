@@ -6,6 +6,14 @@
 
 <tiles:insertTemplate template="/WEB-INF/jsp/template.jsp">
 	<tiles:putAttribute name="body">
+		<style>
+@media ( max-width : 480px) {
+	.removido-responsivo {
+		display: none;
+	}
+}
+</style>
+
 		<script>
 			function alterar() {
 				var lista_erros = new Array();
@@ -37,6 +45,7 @@
 						$('.apoio_edicao').each(function() {
 							$(this).css('display', 'none');
 						});
+						$('.remover-responsivo').addClass('removido-responsivo');
 					}
 				} else {
 					$('.edicao').each(function() {
@@ -45,6 +54,7 @@
 					$('.apoio_edicao').each(function() {
 						$(this).css('display', '');
 					})
+					$('.remover-responsivo').removeClass('removido-responsivo');
 				}
 			}
 			$(document).ready(function() {
@@ -125,22 +135,24 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="form-group col-sm-10">
+									<div class="form-group col-sm-12">
 										<c:forEach var="disponibilidade" items="${disponibilidades}">
-											<label class="checkbox-inline"> <input type="checkbox" name="disponibilidades" value="${disponibilidade.id }" class="require-one">
-												<fmt:message key="${disponibilidade.message }" />
+											<label class="checkbox-inline"> <input type="checkbox" name="disponibilidades" value="${disponibilidade.id }"> <fmt:message
+													key="${disponibilidade.message }" />
 											</label>
 										</c:forEach>
 										<div class="error">
 											<span></span>
 										</div>
 									</div>
-									<button type="submit" id="botao_add_um" class="btn btn-default navbar-right espaco_lateral_direita"
-										title="<fmt:message key="cadastrar.membro" />">
-										<span class="glyphicon glyphicon-cloud-upload"></span>
-										<fmt:message key="cadastrar.membro" />
-									</button>
-
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<button type="submit" id="botao_add_um" class="btn btn-default navbar-right" title="<fmt:message key="cadastrar.membro" />">
+											<span class="glyphicon glyphicon-cloud-upload"></span>
+											<fmt:message key="cadastrar.membro" />
+										</button>
+									</div>
 								</div>
 							</form>
 						</div>
@@ -161,25 +173,28 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="form-group col-sm-10">
+									<div class="form-group col-sm-12">
 										<label class="checkbox-inline"><input type="checkbox" name="sobrescrever" class=""> <fmt:message
 												key="sobrescrever.membros.atuais" /> </label><br />
 										<!-- baixar planilha exemplo -->
 										<a href="#" onclick="javascript:location.href='<c:url value="/membros/add/all/exemplo"/>'"
 											title="<fmt:message
 												key="planilha.exemplo" />"> <span class="glyphicon glyphicon-cloud-download espaco_lateral"
-											title="<fmt:message key="planilha.exemplo" />"></span> <fmt:message key="planilha.exemplo" /></a> 
+											title="<fmt:message key="planilha.exemplo" />"></span> <fmt:message key="planilha.exemplo" /></a>
 										<!-- baixar planilha com membros atuais -->
 										<a href="#" onclick="javascript:location.href='<c:url value="/membros/extract/all"/>'"
 											title="<fmt:message
 												key="planilha.completa" />"> <span class="glyphicon glyphicon-cloud-download espaco_lateral"
 											title="<fmt:message key="planilha.completa" />"></span> <fmt:message key="planilha.completa" /></a>
 									</div>
-									<button id="botao_upload" class="btn btn-default navbar-right espaco_lateral_direita" title="<fmt:message key="cadastrar.membro.massivo" />"
-										type='submit'>
-										<span class="glyphicon glyphicon-cloud-upload"></span>
-										<fmt:message key="cadastrar.membro.massivo" />
-									</button>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<button id="botao_upload" class="btn btn-default navbar-right" title="<fmt:message key="cadastrar.membro.massivo" />" type='submit'>
+											<span class="glyphicon glyphicon-cloud-upload"></span>
+											<fmt:message key="cadastrar.membro.massivo" />
+										</button>
+									</div>
 								</div>
 							</form>
 						</div>
@@ -200,18 +215,18 @@
 				<thead>
 					<tr>
 						<th><fmt:message key="nome" /></th>
-						<th><fmt:message key="email" /></th>
-						<th><fmt:message key="disponibilidade" /></th>
-						<th class="remove-print-area edicao"><fmt:message key="alterar" /></th>
-						<th class="remove-print-area edicao"><fmt:message key="remover" /></th>
+						<th class="remover-responsivo"><fmt:message key="email" /></th>
+						<th class="apoio_edicao"><fmt:message key="disponibilidade" /></th>
+						<th class="remove-print-area edicao"><fmt:message key="disponibilidade" /></th>
+						<th class="remove-print-area edicao"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="membro" items="${membros}">
 						<tr class="registro_membro">
 							<td><div class="nome_membro">${membro.nome}</div></td>
-							<td>${membro.email}</td>
-							<td><c:forEach var="disp" items="${membro.disponibilidades}">
+							<td class="remover-responsivo">${membro.email}</td>
+							<td class="apoio_edicao"><c:forEach var="disp" items="${membro.disponibilidades}">
 						${disp.toString()} 
 					</c:forEach></td>
 							<td class="remove-print-area edicao alteracao"><input type="hidden" name="membros.id" value="${membro.id}" /> <small> <c:forEach
@@ -238,16 +253,16 @@
 
 				<div class="pull-right">
 					<!--  orientação para editar membros -->
-					<span class=" apoio_edicao"> <fmt:message key="editar.membros" /> <span class="glyphicon glyphicon-arrow-right"></span>
+					<span class="apoio_edicao"> <fmt:message key="editar.membros" /> <span class="glyphicon glyphicon-arrow-right btn-lg"></span>
 					</span>
 					<!-- botão para habilitar funções de edição -->
-					<a id="botao_libera_edicao" class="btn-lg apoio_edicao" title="<fmt:message key="alterar" />"> <span class="glyphicon glyphicon-pencil"></span></a>
+					<a id="botao_libera_edicao" class="apoio_edicao" title="<fmt:message key="alterar" />"> <span class="glyphicon glyphicon-pencil btn-lg"></span></a>
 
 					<!-- botão para cancelar funções de edição -->
-					<a id="botao_cancel" class="btn-lg edicao" title="<fmt:message key="cancelar" />"> <span class="glyphicon glyphicon-remove"></span></a>
+					<a id="botao_cancel" class="edicao" title="<fmt:message key="cancelar" />"> <span class="glyphicon glyphicon-remove btn-lg"></span></a>
 
 					<!-- botão submeter alterações -->
-					<a id="botao_update" class="btn-lg edicao" title="<fmt:message key="alterar" />"> <span class="glyphicon glyphicon-ok"></span></a>
+					<a id="botao_update" class="edicao" title="<fmt:message key="alterar" />"> <span class="glyphicon glyphicon-ok btn-lg"></span></a>
 				</div>
 			</div>
 		</div>
