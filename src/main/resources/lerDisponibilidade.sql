@@ -1,0 +1,1 @@
+select * from membro m inner join membro_disponibilidades md on m.id = md.membro_id where md.disponibilidades = 'SEGUNDA'
