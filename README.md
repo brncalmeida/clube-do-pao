@@ -1,3 +1,3 @@
 clube-do-pao
 ============
-Projeto exemplo para tecnologias: Vraptor 3 + hibernate + boostrap + jquery + hsqldb
+Projeto exemplo para tecnologias: Vraptor 3 + hibernate + boostrap + jquery + hsqldb + visual responsivo
