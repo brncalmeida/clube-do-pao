@@ -7,7 +7,7 @@
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>clube-do-pao Maven Webapp</name>
-	<description>Projeto exemplo para tecnologias: Vraptor 3 + hibernate + boostrap + jquery</description>
+	<description>Projeto exemplo para tecnologias: Vraptor 3 + hibernate + boostrap + jquery + hsqldb</description>
 
 	<dependencies>
 		<!-- log -->
