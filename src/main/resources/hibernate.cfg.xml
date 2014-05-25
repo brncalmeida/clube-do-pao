@@ -6,6 +6,13 @@
 <hibernate-configuration>
 
 	<session-factory>
+		<!-- <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property> 
+			<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/postgres</property> 
+			<property name="hibernate.connection.driver_class">org.postgresql.Driver</property> 
+			<property name="hibernate.connection.username">postgres</property> <property 
+			name="hibernate.connection.password">admin</property> -->
+
+
 		<!-- hsqldb -->
 		<property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
 		<property name="hibernate.connection.url">jdbc:hsqldb:mem:clubePaoDB</property>
@@ -13,11 +20,6 @@
 		<property name="hibernate.connection.username">sa</property>
 		<property name="hibernate.connection.password"></property>
 
-		<!-- <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property> 
-			<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/postgres</property> 
-			<property name="hibernate.connection.driver_class">org.postgresql.Driver</property> 
-			<property name="hibernate.connection.username">postgres</property> <property 
-			name="hibernate.connection.password">admin</property> -->
 
 		<property name="hibernate.show_sql">false</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
